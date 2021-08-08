@@ -81,6 +81,8 @@ def upload_file2():
          input_batch = input_batch.to('cuda')
          ft_model.to('cuda')
 
+      ft_model.eval()
+
       with torch.no_grad():
          output = ft_model(input_batch)
       # Tensor of shape 1000, with confidence scores over Imagenet's 1000 classes
