@@ -67,8 +67,8 @@ def upload_file2():
       img = Image.open(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
       preprocess = transforms.Compose([
-         transforms.Resize(256),
-         transforms.CenterCrop(224),
+         transforms.Resize(255),
+         transforms.CenterCrop(255),
          transforms.ToTensor(),
          transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
       ])
