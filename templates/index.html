@@ -1,0 +1,127 @@
+<html lang="es">
+
+<head>
+   <!-- bootstrap 4.x is supported. You can also use the bootstrap css 3.3.x versions -->
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+   <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css">
+   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.8/css/fileinput.min.css" media="all"
+      rel="stylesheet" type="text/css" />
+   <!-- if using RTL (Right-To-Left) orientation, load the RTL CSS file after fileinput.css by uncommenting below -->
+   <!-- link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.8/css/fileinput-rtl.min.css" media="all" rel="stylesheet" type="text/css" /-->
+   <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+   <!-- piexif.min.js is needed for auto orienting image files OR when restoring exif data in resized images and when you 
+            wish to resize images before upload. This must be loaded before fileinput.min.js -->
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.8/js/plugins/piexif.min.js"
+      type="text/javascript"></script>
+   <!-- sortable.min.js is only needed if you wish to sort / rearrange files in initial preview. 
+            This must be loaded before fileinput.min.js -->
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.8/js/plugins/sortable.min.js"
+      type="text/javascript"></script>
+   <!-- purify.min.js is only needed if you wish to purify HTML content in your preview for 
+            HTML files. This must be loaded before fileinput.min.js -->
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.8/js/plugins/purify.min.js"
+      type="text/javascript"></script>
+   <!-- popper.min.js below is needed if you use bootstrap 4.x. You can also use the bootstrap js 
+            3.3.x versions without popper.min.js. -->
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+   <!-- bootstrap.min.js below is needed if you wish to zoom and preview file content in a detail modal
+            dialog. bootstrap 4.x is supported. You can also use the bootstrap js 3.3.x versions. -->
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" type="text/javascript"></script>
+   <!-- the main fileinput plugin file -->
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.8/js/fileinput.min.js"></script>
+   <!-- optionally if you need a theme like font awesome theme you can include it as mentioned below -->
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.8/themes/fa/theme.js"></script>
+   <!-- optionally if you need translation for your language then include  locale file as mentioned below -->
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.8/js/locales/es.js"></script>
+
+   <script src="https://cdn.anychart.com/releases/8.10.0/js/anychart-core.min.js"></script>
+   <script src="https://cdn.anychart.com/releases/8.10.0/js/anychart-cartesian.min.js"></script>
+
+   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+   <title>PUCP</title>
+</head>
+
+<body>
+   <br />
+   <div style="text-align: center;">
+      <img src="https://assets.website-files.com/5f33fa113ddaf3397a49cfe1/60f49bd970a4b4ccc3067acb_logo-pucpazul.svg">
+      <br /><br />
+      <h3>Proyecto: Detección de Maquinaria pesada en ambientes outdoor a partir de vistas aéreas</h3>
+   </div>
+   <br />
+
+   <div style="margin-left: auto; margin-right: auto; width: 760px;">
+      <input id="input-44" name="input44[]" type="file" accept="image/*" multiple>
+   </div>
+
+   <div>
+      <div id="container" style="height: 35%; margin-left: auto; margin-right: auto; width: 760px;">
+      </div>
+   </div>
+   
+   <script>
+      $(document).ready(function () {
+         var $el1 = $("#input-44");
+         $el1.fileinput({
+            theme: "gly",
+            allowedFileExtensions: ['jpg', 'png', 'gif'],
+            uploadUrl: "/file-upload-batch/2",
+            uploadAsync: true,
+            deleteUrl: "/site/file-delete",
+            showUpload: false, // hide upload button
+            overwriteInitial: false, // append files to initial preview
+            minFileCount: 1,
+            maxFileCount: 5,
+            browseOnZoneClick: true,
+            initialPreviewAsData: true,
+         }).on("filebatchselected", function (event, files) {
+            $el1.fileinput("upload");
+         }).on('fileuploaded', function (event, data, id, index) {
+            // $("#result").html(data.response);
+            console.log(data.response);
+            //   var fname = data.files[index].name,
+            //       out = '<li>' + 'Uploaded file # ' + (index + 1) + ' - '  +  fname + ' successfully.' + '</li>';
+            //   $('#kv-success-1 ul').append(out);
+            //   $('#kv-success-1').fadeIn('slow');
+
+            var data2 = [
+               ["John", 10000],
+               ["Jake", 12000],
+               ["Peter", 13000],
+               ["James", 10000],
+               ["Mary", 9000],
+               ["A", 9000],
+               ["B", 9000],
+               ["C", 9000]
+            ];
+            console.log(data2);
+
+            
+            // create a bar series and set the data
+            var series = chart.bar(data.response);
+            series.normal().fill("#151255");
+           
+
+
+
+         });
+
+         // create a chart
+         chart = anychart.bar();
+         chart.animation(true);
+         chart.yScale().minimum(0);
+         chart.yScale().maximum(100);
+
+         // set the container id
+         chart.container("container");
+
+         // initiate drawing the chart
+         chart.draw();
+      });
+      
+   </script>
+
+</body>
+
+</html>
